@@ -50,9 +50,11 @@ function kuva_puurid(){
 		
 	}
 	
-	echo "<p>";
+	/*
+	echo "<p><pre>";
 	print_r($puurid);
-	
+	echo "</pre>";
+	*/
 		
 
 	include_once('views/puurid.html');
