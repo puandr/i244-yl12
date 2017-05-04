@@ -8,7 +8,9 @@ function connect_db(){
 	$pass="t3st3r123";
 	$db="test";
 	$connection = mysqli_connect($host, $user, $pass, $db) or die("ei saa ühendust mootoriga- ".mysqli_error());
+	
 	mysqli_query($connection, "SET CHARACTER SET UTF8") or die("Ei saanud baasi utf-8-sse - ".mysqli_error($connection));
+	
 }
 
 function logi(){
@@ -25,6 +27,33 @@ function logout(){
 
 function kuva_puurid(){
 	// siia on vaja funktsionaalsust
+	global $connection;
+	
+	$puurid = array();
+	//$puuri_nr = array();
+	
+	$query = "SELECT DISTINCT puur FROM 10162828_loomaaed";
+	$result = mysqli_query($connection, $query) or die("$query - ".mysqli_error($link));
+		
+	//$ridade_arv = mysqli_num_rows($result);
+	
+	while ($ajutine = mysqli_fetch_assoc($result)) {
+	
+		$query_2 = "SELECT * FROM 10162828_loomaaed WHERE puur=".mysqli_real_escape_string($connection, $ajutine['puur']);
+		$result_2 = mysqli_query($connection, $query_2) or die("$query - ".mysqli_error($link_2));
+		//print_r($result_2);
+		//echo "<p>";
+		while ($rida = mysqli_fetch_assoc($result_2)) {
+			$puurid[$ajutine['puur']][] = $rida;
+		}
+		
+		
+	}
+	
+	echo "<p>";
+	print_r($puurid);
+	
+		
 
 	include_once('views/puurid.html');
 	
